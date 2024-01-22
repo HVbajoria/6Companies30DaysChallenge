@@ -1,0 +1,29 @@
+class Solution {
+    public int maximizeSquareHoleArea(int n, int m, int[] hBars, int[] vBars) {
+
+        if(n==hBars.length && m == vBars.length){
+            int ss = Math.min(n,m)+1;
+            return ss * ss;
+        }
+        int maxh = maxGap(hBars,n+2);
+        int maxv = maxGap(vBars,m+2);
+        int res = Math.min(maxh,maxv);
+        return res*res;
+    }
+
+    private int maxGap(int[] bars, int n){
+        int i=0, max = 0, s = 1, p = 1;
+        Arrays.sort(bars);
+
+        for(int c : bars){
+            if(c != p+1){
+                max = Math.max(p+1-s,max);
+                s = c-1;
+            }
+
+            p = c;
+        }
+        max = Math.max(max,p+1-s);
+        return max;
+    }
+}
